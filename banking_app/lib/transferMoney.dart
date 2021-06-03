@@ -272,7 +272,11 @@ class _TransferMoneyState extends State<TransferMoney> {
               ),
               onChanged: (val) {
                 setState(() {
-                  amount = double.parse(val);
+                  if (val.isNotEmpty) {
+                    amount = double.parse(val);
+                  }else{
+                    amount = 0;
+                  }
                 });
               },
               validator: (val) {
@@ -376,8 +380,7 @@ class _TransferMoneyState extends State<TransferMoney> {
       version: 1,
     );
 
-    var userList = await database.rawQuery(
-        'SELECT * FROM Users');
+    var userList = await database.rawQuery('SELECT * FROM Users');
 
     // DATE & TIME
     var minute = DateTime.now().minute.toString();
