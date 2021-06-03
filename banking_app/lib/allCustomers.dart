@@ -18,7 +18,16 @@ class _AllCustomersState extends State<AllCustomers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Customers'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          'All Cutomers',
+          style: TextStyle(
+            color: Colors.black87,
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black87),
       ),
       body: ListView.builder(
         physics: BouncingScrollPhysics(),
@@ -39,7 +48,16 @@ class _AllCustomersState extends State<AllCustomers> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 15,
+                      width: 0,
+                    ),
+                    Container(
+                      height: 60,
+                      child: Image.asset(user['Gender'] == "M"
+                          ? 'images/man.png'
+                          : 'images/woman.png'),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,8 +109,6 @@ class _AllCustomersState extends State<AllCustomers> {
       ),
     );
   }
-
-  
 
   void _transferMoney(user) {
     showDialog(

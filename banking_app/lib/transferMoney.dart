@@ -342,6 +342,7 @@ class _TransferMoneyState extends State<TransferMoney> {
                       fontSize: 16.0,
                     );
                     Navigator.pop(context);
+                    Navigator.pop(context);
                   }
                 });
               },

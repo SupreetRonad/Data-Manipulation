@@ -1,3 +1,4 @@
+import 'package:banking_app/myTransactions.dart';
 import 'package:banking_app/transferMoney.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
@@ -45,31 +46,50 @@ class _CustomerState extends State<Customer> {
           ),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(
-          color: Colors.black87
-        ),
+        iconTheme: IconThemeData(color: Colors.black87),
       ),
       body: loading
           ? Center(
               child: CircularProgressIndicator(),
             )
           : Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    user[0]['User_Name'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
+                  Container(
+                    height: 130,
+                    child: Image.asset(user[0]['Gender'] == "M"
+                        ? 'images/man.png'
+                        : 'images/woman.png'),
                   ),
                   SizedBox(
                     height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        user[0]['User_Name'].split(" ")[0],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                      Text(
+                        " " + user[0]['User_Name'].split(" ")[1],
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 30,
+                            color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Row(
                     children: [
@@ -129,36 +149,60 @@ class _CustomerState extends State<Customer> {
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Text(
-                    "Balance :",
+                    "Total balance :",
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.black54,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "Rs. " + user[0]['Balance'].toString(),
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "Rs. " + user[0]['Balance'].toString(),
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
                   ),
                   SizedBox(
                     height: 30,
                   ),
+                  Spacer(),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          elevation: 5,
+                          shadowColor: Colors.white70,
+                          padding: EdgeInsets.all(17),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (builder) {
+                              return MyTransactions(user[0]);
+                            },
+                          );
+                        },
+                        child: Text(
+                          'My Transactions',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
                           elevation: 5,
                           shadowColor: Colors.blue[300],
                           padding: EdgeInsets.all(13),
@@ -168,10 +212,11 @@ class _CustomerState extends State<Customer> {
                         ),
                         onPressed: () {
                           showDialog(
-                              context: context,
-                              builder: (builder) {
-                                return TransferMoney(user[0]);
-                              });
+                            context: context,
+                            builder: (builder) {
+                              return TransferMoney(user[0]);
+                            },
+                          );
                         },
                         child: Container(
                           width: 140,
@@ -196,4 +241,6 @@ class _CustomerState extends State<Customer> {
             ),
     );
   }
+
+  
 }
