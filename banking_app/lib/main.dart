@@ -105,23 +105,39 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          widget.title,
-          style: TextStyle(
-            color: Colors.black87,
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black87),
+        backgroundColor: Colors.transparent,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              'The one stop for all your banking..',
+              style: TextStyle(
+                fontSize: 17,
+                color: Colors.black54,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            Expanded(
+              child: Image.asset("images/bank.png"),
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
+                elevation: 5,
+                shadowColor: Colors.white70,
                 padding: EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -134,13 +150,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 );
               },
-              child: Text('View All Customers'),
+              child: Container(
+                width: MediaQuery.of(context).size.width * .8,
+                child: Center(
+                  child: Text('All Customers'),
+                ),
+              ),
             ),
             SizedBox(
               height: 20,
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
+                elevation: 5,
+                shadowColor: Colors.white70,
                 padding: EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -153,7 +176,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 );
               },
-              child: Text('View All Transactions'),
+              child:Container(
+                width: MediaQuery.of(context).size.width * .8,
+                child: Center(
+                  child: Text('All Transactions'),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 40,
             ),
           ],
         ),

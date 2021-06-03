@@ -76,11 +76,13 @@ class _MyTransactionsState extends State<MyTransactions> {
                 ),
                 Divider(),
                 tr.length == 0
-                    ? Center(
-                        child: Text(
-                          "No Transactions",
-                          style: TextStyle(
-                            color: Colors.black54,
+                    ? Expanded(
+                        child: Center(
+                          child: Text(
+                            "No Transactions",
+                            style: TextStyle(
+                              color: Colors.black54,
+                            ),
                           ),
                         ),
                       )
