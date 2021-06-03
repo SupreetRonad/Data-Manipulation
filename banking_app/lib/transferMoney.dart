@@ -393,6 +393,7 @@ class _TransferMoneyState extends State<TransferMoney> {
     print(date + " 000 " + hh.toString() + " : " + minute + " " + gg);
 
     // BALANCE
+    amount = double.parse(amount.toStringAsFixed(3));
     var senderBalance = user['Balance'] - amount;
     var recipientBalance = userList[select]['Balance'] + amount;
 
