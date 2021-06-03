@@ -130,22 +130,53 @@ class _MyTransactionsState extends State<MyTransactions> {
                                       ],
                                     ),
                                     Spacer(),
-                                    Text(
-                                      '${flag ? '-' : '+'} ' +
-                                          tr1['Amount'].toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 25,
-                                        color: sent,
-                                      ),
-                                    ),
-                                    Text(
-                                      ' Rs.',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: sent,
-                                      ),
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '${flag ? '-' : '+'} ' +
+                                                  tr1['Amount'].toString(),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 25,
+                                                color: sent,
+                                              ),
+                                            ),
+                                            Text(
+                                              ' Rs.',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: sent,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 5,),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              'Balance : ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                            SizedBox(width: 5,),
+                                            Text(
+                                              tr1[flag ? 'SenderB' : 'RecipientB'].toString(),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
                                     ),
                                   ],
                                 ),
