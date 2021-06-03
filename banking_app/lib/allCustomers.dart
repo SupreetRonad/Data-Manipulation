@@ -1,6 +1,8 @@
 import 'package:banking_app/main.dart';
 import 'package:flutter/material.dart';
 
+import 'customer.dart';
+
 class AllCustomers extends StatefulWidget {
   @override
   _AllCustomersState createState() => _AllCustomersState();
@@ -19,33 +21,70 @@ class _AllCustomersState extends State<AllCustomers> {
         title: Text('All Customers'),
       ),
       body: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.only(bottom: 70),
         itemCount: 10,
         itemBuilder: (context, index) {
           var user = MyHomePage.list[index];
-          return Card(
-            child: Column(
-              children: [
-                Text(
-                  user['User_Name'],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          return Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Card(
+              shadowColor: Colors.white60,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        _showInfo(user);
-                      },
-                      child: Text('View Info'),
+                    SizedBox(
+                      width: 15,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _transferMoney(user);
-                      },
-                      child: Text('Transfer Money'),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user['User_Name'],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          user['Email'],
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Card(
+                      elevation: 0,
+                      color: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Customer(user),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.arrow_forward_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           );
         },
@@ -53,23 +92,7 @@ class _AllCustomersState extends State<AllCustomers> {
     );
   }
 
-  void _showInfo(user) {
-    showDialog(
-      context: context,
-      builder: (builder) {
-        return Dialog(
-          child: Column(
-            children: [
-              Text(user['User_Name']),
-              Text(user['Email']),
-              Text(user['Phone_no']),
-              Text(user['Balance'].toString()),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  
 
   void _transferMoney(user) {
     showDialog(
@@ -109,9 +132,7 @@ class _AllCustomersState extends State<AllCustomers> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onPressed: () {
-
-                              },
+                              onPressed: () {},
                             ),
                           ],
                         ),
