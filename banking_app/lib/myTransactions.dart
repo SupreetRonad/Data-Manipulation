@@ -136,7 +136,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                                           children: [
                                             Text(
                                               '${flag ? '-' : '+'} ' +
-                                                  tr1['Amount'].toString(),
+                                                  tr1['Amount'].toStringAsFixed(2),
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 25,
@@ -167,7 +167,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                                             ),
                                             SizedBox(width: 5,),
                                             Text(
-                                              tr1[flag ? 'SenderB' : 'RecipientB'].toString(),
+                                              tr1[flag ? 'SenderB' : 'RecipientB'].toStringAsFixed(2),
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,

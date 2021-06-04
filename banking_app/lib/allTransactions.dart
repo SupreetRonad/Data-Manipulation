@@ -108,7 +108,8 @@ class _AllTransactionsState extends State<AllTransactions> {
                                             children: [
                                               Text(
                                                 "Rs. " +
-                                                    tr['Amount'].toString(),
+                                                    tr['Amount']
+                                                        .toStringAsFixed(2),
                                                 style: TextStyle(
                                                     color: Colors.green,
                                                     fontSize: 30,
@@ -148,18 +149,18 @@ class _AllTransactionsState extends State<AllTransactions> {
                                               CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              tr['Date1'],
-                                              style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                            Text(
                                               tr['Date2'],
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              tr['Date1'],
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: 13,
+                                              ),
                                             ),
                                           ],
                                         ),

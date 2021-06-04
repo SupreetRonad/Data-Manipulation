@@ -1,13 +1,16 @@
+import 'package:banking_app/confirmDialog.dart';
+import 'package:banking_app/customer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'main.dart';
 
 class TransferMoney extends StatefulWidget {
-  final user;
+  final user, refresh;
 
-  TransferMoney(this.user);
+  TransferMoney(this.user, this.refresh);
 
   @override
   _TransferMoneyState createState() => _TransferMoneyState();
@@ -274,7 +277,7 @@ class _TransferMoneyState extends State<TransferMoney> {
                 setState(() {
                   if (val.isNotEmpty) {
                     amount = double.parse(val);
-                  }else{
+                  } else {
                     amount = 0;
                   }
                 });
@@ -336,17 +339,38 @@ class _TransferMoneyState extends State<TransferMoney> {
                     );
                   } else {
                     _transferAmount(widget.user);
-                    Fluttertoast.showToast(
-                      msg: "Amount successfully transfered",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
+
+                    showDialog(
+                      context: context,
+                      builder: (builder) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: SizedBox(
+                            height: 80,
+                            child: SpinKitFadingCircle(
+                              color: Colors.black54,
+                              size: 30,
+                            ),
+                          ),
+                        );
+                      },
                     );
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    Future.delayed(const Duration(milliseconds: 1000), () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      widget.refresh();
+                      showDialog(
+                        context: context,
+                        builder: (builder) {
+                          return ConfirmDialog(
+                            amount: amount,
+                            recipient: MyHomePage.list[select]['User_Name'],
+                          );
+                        },
+                      );
+                    });
                   }
                 });
               },
@@ -393,7 +417,7 @@ class _TransferMoneyState extends State<TransferMoney> {
     print(date + " 000 " + hh.toString() + " : " + minute + " " + gg);
 
     // BALANCE
-    amount = double.parse(amount.toStringAsFixed(3));
+    amount = double.parse(amount.toStringAsFixed(2));
     var senderBalance = user['Balance'] - amount;
     var recipientBalance = userList[select]['Balance'] + amount;
 

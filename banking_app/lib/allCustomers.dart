@@ -87,6 +87,7 @@ class _AllCustomersState extends State<AllCustomers> {
                       ),
                       child: IconButton(
                         onPressed: () {
+                          Customer.loading = true;
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => Customer(user),

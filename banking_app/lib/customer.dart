@@ -7,12 +7,14 @@ class Customer extends StatefulWidget {
   final ref;
   const Customer(this.ref);
 
+  static bool loading = true;
+
   @override
   _CustomerState createState() => _CustomerState();
 }
 
 class _CustomerState extends State<Customer> {
-  bool loading = true;
+  
   List<Map> user;
   void getData() async {
     var databasesPath = await getDatabasesPath();
@@ -26,13 +28,19 @@ class _CustomerState extends State<Customer> {
         'SELECT * FROM Users WHERE Phone_no == ${widget.ref['Phone_no']}');
     print(user[0]['User_Name']);
     setState(() {
-      loading = false;
+      Customer.loading = false;
+    });
+  }
+
+  void refresh(){
+    setState(() {
+      Customer.loading = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (loading) {
+    if (Customer.loading) {
       getData();
     }
     return Scaffold(
@@ -48,7 +56,7 @@ class _CustomerState extends State<Customer> {
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.black87),
       ),
-      body: loading
+      body: Customer.loading
           ? Center(
               child: CircularProgressIndicator(),
             )
@@ -160,7 +168,7 @@ class _CustomerState extends State<Customer> {
                     ),
                   ),
                   Text(
-                    "Rs. " + user[0]['Balance'].toString(),
+                    "Rs. " + user[0]['Balance'].toStringAsFixed(2),
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -214,7 +222,7 @@ class _CustomerState extends State<Customer> {
                           showDialog(
                             context: context,
                             builder: (builder) {
-                              return TransferMoney(user[0]);
+                              return TransferMoney(user[0], refresh);
                             },
                           );
                         },
