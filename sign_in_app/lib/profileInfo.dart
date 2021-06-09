@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_app/main.dart';
-import 'package:sign_in_app/signIn.dart';
 
 class GoogleSignedIn extends StatefulWidget {
-  final googleAuth;
+  final auth1, flag;
 
-  const GoogleSignedIn(this.googleAuth);
+  const GoogleSignedIn({this.auth1, this.flag});
 
   @override
   _GoogleSignedInState createState() => _GoogleSignedInState();
@@ -15,12 +15,16 @@ class GoogleSignedIn extends StatefulWidget {
 class _GoogleSignedInState extends State<GoogleSignedIn> {
   bool loading = true;
   var name, email, image;
+  FacebookLogin facebookLogin = FacebookLogin();
+  GoogleSignIn googleUser = GoogleSignIn(scopes: ['email']);
 
-  void getUserInfo(googleAuth) {
+  void getUserInfo(auth1, flag) {
+    var auth = auth1;
+
     setState(() {
-      name = googleAuth.currentUser.displayName;
-      email = googleAuth.currentUser.email;
-      image = googleAuth.currentUser.photoUrl;
+      name = auth.displayName;
+      email = auth1.email;
+      image = flag ? auth1.photoUrl : auth1.photoURL;
       loading = false;
     });
   }
@@ -28,7 +32,7 @@ class _GoogleSignedInState extends State<GoogleSignedIn> {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      getUserInfo(widget.googleAuth);
+      getUserInfo(widget.auth1, widget.flag);
     }
     return Scaffold(
       body: loading
@@ -79,7 +83,7 @@ class _GoogleSignedInState extends State<GoogleSignedIn> {
                           EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                     ),
                     onPressed: () {
-                      widget.googleAuth.signOut();
+                      widget.flag ? googleUser.signOut() : facebookLogin.logOut();
                       Navigator.pop(context);
                       Navigator.of(context).push(
                         MaterialPageRoute(
