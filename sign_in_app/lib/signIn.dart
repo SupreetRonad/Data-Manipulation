@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   GoogleSignIn googleUser = GoogleSignIn(scopes: ['email']);
-  static final FacebookLogin facebookSignIn = new FacebookLogin();  
+  static final FacebookLogin facebookSignIn = new FacebookLogin();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   void _showMessage(message) {
@@ -34,7 +34,10 @@ class _HomePageState extends State<HomePage> {
         Navigator.pop(context);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => GoogleSignedIn(auth1: googleUser.currentUser, flag: true,),
+            builder: (context) => GoogleSignedIn(
+              auth1: googleUser.currentUser,
+              flag: true,
+            ),
           ),
         );
       }
@@ -51,12 +54,15 @@ class _HomePageState extends State<HomePage> {
         final FacebookAccessToken accessToken = result.accessToken;
         _showMessage('Logged in !');
         AuthCredential credential =
-        FacebookAuthProvider.credential(accessToken.token);
+            FacebookAuthProvider.credential(accessToken.token);
         var a = await _auth.signInWithCredential(credential);
         Navigator.pop(context);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => GoogleSignedIn(auth1: a.user, flag: false,),
+            builder: (context) => GoogleSignedIn(
+              auth1: a.user,
+              flag: false,
+            ),
           ),
         );
         break;
@@ -74,39 +80,130 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: 50,
               ),
-              onPressed: () {
-                signInWithGoogle();
-              },
-              child: Text("Google"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+              Text(
+                "Login App",
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[600],
                 ),
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               ),
-              onPressed: () {
-                signInWithFacebook();
-              },
-              child: Text("Facebook"),
-            ),
-          ],
+              Expanded(
+                child: Container(
+                  height: MediaQuery.of(context).size.width * .6,
+                  child: Image.asset("assets/login.png"),
+                ),
+              ),
+              Text(
+                "Hey, Welcome",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Use the following to login...",
+                style: TextStyle(fontSize: 13, color: Colors.black54),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    ),
+                    onPressed: () {
+                      signInWithGoogle();
+                    },
+                    child: Container(
+                      width: 102,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Image.asset(
+                              "assets/google.png",
+                              height: 20,
+                              width: 20,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Google"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    ),
+                    onPressed: () {
+                      signInWithFacebook();
+                    },
+                    child: Container(
+                      width: 102,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Image.asset(
+                              "assets/facebook.png",
+                              height: 20,
+                              width: 20,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Facebook"),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );

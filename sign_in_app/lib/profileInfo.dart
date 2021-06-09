@@ -43,6 +43,14 @@ class _GoogleSignedInState extends State<GoogleSignedIn> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * .6,
+                    child: Image.asset(
+                        "assets/${widget.flag ? "google1" : "facebook1"}.png"),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(200),
                     child: Image.network(
@@ -83,7 +91,9 @@ class _GoogleSignedInState extends State<GoogleSignedIn> {
                           EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                     ),
                     onPressed: () {
-                      widget.flag ? googleUser.signOut() : facebookLogin.logOut();
+                      widget.flag
+                          ? googleUser.signOut()
+                          : facebookLogin.logOut();
                       Navigator.pop(context);
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -91,7 +101,21 @@ class _GoogleSignedInState extends State<GoogleSignedIn> {
                         ),
                       );
                     },
-                    child: Text("Sign Out"),
+                    child: Container(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.exit_to_app_rounded,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Sign Out"),
+                        ],
+                      ),
+                    ),
                   )
                 ],
               ),
