@@ -29,8 +29,21 @@ class _HomePageState extends State<HomePage> {
 
   void signInWithGoogle() async {
     try {
-      var result = await googleUser.signIn();
+
+      final GoogleSignInAccount result = await googleUser.signIn();
+
       if (result.id != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await result.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        final UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+
         Navigator.pop(context);
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -67,11 +80,10 @@ class _HomePageState extends State<HomePage> {
         );
         break;
       case FacebookLoginStatus.cancelledByUser:
-        _showMessage('Login cancelled by the user.');
+        //_showMessage('Login cancelled by the user.');
         break;
       case FacebookLoginStatus.error:
-        _showMessage('Something went wrong with the login process.\n'
-            'Here\'s the error Facebook gave us: ${result.errorMessage}');
+        _showMessage('Something went wrong !\n');
         break;
     }
   }

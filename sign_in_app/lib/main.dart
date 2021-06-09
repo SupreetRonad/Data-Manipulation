@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
           future: _initialization,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Text("Something went wrong...");
+              return Text("No internet connection...");
             }
             if (snapshot.connectionState == ConnectionState.done) {
               return HomePage();
